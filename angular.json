@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "projects": {
+    "push-based": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/push-based",
+      "sourceRoot": "apps/push-based/src",
+      "prefix": "push-based-app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/push-based",
+            "index": "apps/push-based/src/index.html",
+            "main": "apps/push-based/src/main.ts",
+            "polyfills": "apps/push-based/src/polyfills.ts",
+            "tsConfig": "apps/push-based/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/push-based/src/favicon.ico",
+              "apps/push-based/src/assets"
+            ],
+            "styles": ["apps/push-based/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/push-based/src/environments/environment.ts",
+                  "with": "apps/push-based/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "push-based:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "push-based:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "push-based:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/push-based/tsconfig.app.json",
+              "apps/push-based/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/push-based/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/push-based/jest.config.js",
+            "tsConfig": "apps/push-based/tsconfig.spec.json",
+            "setupFile": "apps/push-based/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "push-based-e2e": {
+      "root": "apps/push-based-e2e",
+      "sourceRoot": "apps/push-based-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/push-based-e2e/cypress.json",
+            "tsConfig": "apps/push-based-e2e/tsconfig.e2e.json",
+            "devServerTarget": "push-based:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "push-based:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/push-based-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/push-based-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "push-based"
+}

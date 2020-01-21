@@ -1,0 +1,22 @@
+{
+  "npmScope": "push-based-app",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "push-based": {
+      "tags": []
+    },
+    "push-based-e2e": {
+      "tags": [],
+      "implicitDependencies": ["push-based"]
+    }
+  }
+}
