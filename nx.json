@@ -17,6 +17,9 @@
     "push-based-e2e": {
       "tags": [],
       "implicitDependencies": ["push-based"]
+    },
+    "user": {
+      "tags": []
     }
   }
 }

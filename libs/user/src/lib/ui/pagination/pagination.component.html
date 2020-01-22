@@ -1,0 +1,8 @@
+<label>
+  pageSize:
+  <select (change)="changePageSize($event.target.value)">
+    <option *ngFor="let pageSize of pageSizeOption" [value]="pageSize">
+      {{ pageSize }}
+    </option>
+  </select>
+</label>
