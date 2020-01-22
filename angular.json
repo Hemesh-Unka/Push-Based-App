@@ -119,6 +119,22 @@
           }
         }
       }
+    },
+    "user": {
+      "projectType": "library",
+      "root": "libs/user",
+      "sourceRoot": "libs/user/src",
+      "prefix": "push-based-app",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/user/tsconfig.lib.json"],
+            "exclude": ["**/node_modules/**", "!libs/user/**"]
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
