@@ -1,0 +1,7 @@
+<div *ngIf="vm$ | async as vm">
+  <push-based-app-user-list [users]="vm.users"></push-based-app-user-list>
+  <push-based-app-pagination
+    [pageSizeOption]="vm.pagination.pageSizes"
+    (pageSize)="changePageSize($event)"
+  ></push-based-app-pagination>
+</div>
