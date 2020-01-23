@@ -1,4 +1,5 @@
 <div *ngIf="vm$ | async as vm">
+  <push-based-app-search [searchTerm]="vm.searchTerm"></push-based-app-search>
   <push-based-app-user-list [users]="vm.users"></push-based-app-user-list>
   <push-based-app-pagination
     [pageSizeOption]="vm.pagination.pageSizes"

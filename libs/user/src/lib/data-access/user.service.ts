@@ -1,32 +1,83 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Pagination } from './user.state';
+interface Name {
+  title: string;
+  first: string;
+  last: string;
+}
+
+interface Street {
+  number: number;
+  name: string;
+}
+
+interface Coordinates {
+  latitude: string;
+  longitude: string;
+}
+
+interface Timezone {
+  offset: string;
+  description: string;
+}
+
+interface Location {
+  street: Street;
+  city: string;
+  state: string;
+  country: string;
+  postcode: any;
+  coordinates: Coordinates;
+  timezone: Timezone;
+}
+
+interface Login {
+  uuid: string;
+  username: string;
+  password: string;
+  salt: string;
+  md5: string;
+  sha1: string;
+  sha256: string;
+}
+
+interface Dob {
+  date: Date;
+  age: number;
+}
+
+interface Registered {
+  date: Date;
+  age: number;
+}
+
+interface Id {
+  name: string;
+  value: string;
+}
+
+interface Picture {
+  large: string;
+  medium: string;
+  thumbnail: string;
+}
 
 export interface User {
-  id: number;
-  name: string;
-  username: string;
+  gender: string;
+  name: Name;
+  location: Location;
   email: string;
-  address: Address;
+  login: Login;
+  dob: Dob;
+  registered: Registered;
   phone: string;
-  website: string;
-  company: Company;
-}
-interface Address {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
-  geo: Geo;
-}
-interface Geo {
-  lat: string;
-  lng: string;
-}
-interface Company {
-  name: string;
-  catchPhrase: string;
-  bs: string;
+  cell: string;
+  id: Id;
+  picture: Picture;
+  nat: string;
 }
 
 @Injectable({
@@ -35,15 +86,18 @@ interface Company {
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  fetchUsers(pagination: Pagination) {
-    return this.http.get<User[]>(buildUserUrl(pagination));
+  fetchUsers(pagination: Pagination, searchTerm: string): Observable<User[]> {
+    return this.http
+      .get<any>(buildUserUrl(pagination, searchTerm))
+      .pipe(map(response => response.results));
   }
 }
 
-function buildUserUrl(pagination: Pagination): string {
-  const URL = 'https://jsonplaceholder.typicode.com/users';
-  const currentPage = `_start=${pagination.currentPage}`;
-  const pageSize = `_limit=${pagination.selectedSize}&`;
+function buildUserUrl(pagination: Pagination, searchTerm: string): string {
+  const URL = 'https://randomuser.me/api/';
+  const currentPage = `page=${pagination.currentPage}`;
+  const pageSize = `results=${pagination.selectedSize}`;
+  const searchFor = `seed=${searchTerm}`;
 
-  return `${URL}?${pageSize}&${currentPage}`;
+  return `${URL}?${searchFor}&${pageSize}&${currentPage}`;
 }

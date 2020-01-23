@@ -1,5 +1,3 @@
 <ul>
-  <li *ngFor="let user of users">
-    {{ user.name }}
-  </li>
+  <li *ngFor="let user of users">{{ user.name.first }} {{ user.name.last }}</li>
 </ul>
